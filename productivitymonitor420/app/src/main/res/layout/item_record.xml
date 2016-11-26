@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="MACHINEID"
+        android:id="@+id/MACHINEIDTEXTVIEW" />
+
+    <ImageView
+        android:layout_width="64dip"
+        android:layout_height="64dip"
+        android:id="@+id/SEXEIMAGEVIEW" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Minutes"
+        android:id="@+id/MINUTETEXTVIEW" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="total"
+        android:id="@+id/TOTALMONEYTEXTVIEW" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TIMEVIEW"
+        android:gravity="end" />
+
+</LinearLayout>
