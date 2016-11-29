@@ -80,10 +80,10 @@ public class StatisticsActivity extends AppCompatActivity {
         String numberOfCustomers = String.valueOf(queryForDatDay.count());
         String income = String.valueOf(queryForDatDay.sum("totalMoney"))+" Ft";
         emailIntent.putExtra(Intent.EXTRA_TEXT, endDate.toString()+" report: \n"+"Vendégek száma: "+numberOfCustomers+"\n"+
-        "Teljes bevétel: ");
+        "Teljes bevétel: "+ income);
 
         try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            startActivity(Intent.createChooser(emailIntent, "Send report..."));
             finish();
             Log.i("Finished sending email.", "");
         } catch (android.content.ActivityNotFoundException ex) {
