@@ -6,4 +6,6 @@
     <string name="cancel">Mégse</string>
     <string name="add">Hozzáadás</string>
     <string name="addnewrecord">Új tétel felvétele</string>
+    <string name="action_statistics">Statistics</string>
+    <string name="ok">OK</string>
 </resources>

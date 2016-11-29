@@ -1,52 +1,29 @@
 package com.shark.lacas.productivitymonitor420;
 
-import com.orm.SugarRecord;
-
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by macbookpro on 26/11/16.
  */
-public class ProductivityRecord extends SugarRecord {
+public class ProductivityRecord extends RealmObject {
 
     private static final int MINUTEPRICE = 80;
 
-    public enum Machine{
-        FIRST,SECOND,THIRD,FOURTH,FIFTH;
-
-        public static Machine getByOrdinal(int ordinal){
-            Machine ret = null;
-            for (Machine m : Machine.values()){
-                if (m.ordinal() == ordinal){
-                    ret = m;
-                    break;
-                }
-            }
-            return ret;
-        }
-    }
-    public enum FN{
-        FERFI, NO;
-        public static FN getByOrdinal(int ordinal){
-            FN ret = null;
-            for (FN fn : FN.values()){
-                if (fn.ordinal() == ordinal){
-                    ret = fn;
-                    break;
-                }
-            }
-            return ret;
-        }
-    }
     public int minute;
     public int totalMoney;
-    public Machine machine;
-    public FN fn;
+    public int machine;
+    public String fn;
     public Date time;
     private int price;
+    @PrimaryKey
+    public int ID;
 
     public int getPrice(){
         return minute*MINUTEPRICE;
     }
-
 }

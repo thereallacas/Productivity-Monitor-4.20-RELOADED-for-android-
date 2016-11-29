@@ -1,57 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical|center_horizontal">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="MACHINEID"
-        android:id="@+id/MACHINEIDTEXTVIEW"
-        android:textSize="40dp" />
-
-    <ImageView
-        android:layout_width="64dip"
-        android:layout_height="64dip"
-        android:id="@+id/SEXEIMAGEVIEW" />
+        android:text="Vendégek száma"
+        android:id="@+id/ncuslab"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Minutes"
-        android:id="@+id/MINUTETEXTVIEW"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+        android:text="32"
+        android:id="@+id/NUMBEROFCUSTOMERS"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="perc"
-        android:id="@+id/minutelabel"
-        android:paddingLeft="5dp" />
+        android:text="Bevétel"
+        android:id="@+id/inlab"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="total"
-        android:id="@+id/TOTALMONEYTEXTVIEW"
-        android:paddingLeft="10dp" />
+        android:text="2343Ft"
+        android:id="@+id/INCOMETEXTVIEW"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ft"
-        android:id="@+id/currencyLabel"
-        android:paddingLeft="5dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/TIMEVIEW" />
-
+        android:text="Gépek statisztikája"
+        android:id="@+id/machstatlabel" />
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:id="@+id/GRAPH" />
 </LinearLayout>

@@ -1,67 +1,53 @@
 package com.shark.lacas.productivitymonitor420;
 
-import android.os.AsyncTask;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import co.moonmonkeylabs.realmrecyclerview.RealmRecyclerView;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
-    private RecyclerView recyclerView;
+public class MainActivity extends RealmBaseActivity implements AddNewRecordFragment.INewRecordDialogListener {
+
+    private RealmRecyclerView recyclerView;
     private ProductivityAdapter productivityAdapter;
+    private Realm realm;
 
-    private void initRecyclerView(){
-        recyclerView = (RecyclerView) findViewById(R.id.MainRecyclerView);
-        productivityAdapter = new ProductivityAdapter();
-        loadItemsInBackground();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(productivityAdapter);
-    }
-
-    private void loadItemsInBackground() {
-        new AsyncTask<Void, Void, List<ProductivityRecord>>(){
-
-            @Override
-            protected List<ProductivityRecord> doInBackground(Void... voids) {
-                return ProductivityRecord.listAll((ProductivityRecord.class));
-            }
-
-            @Override
-            protected void onPostExecute(List<ProductivityRecord> productivityRecords){
-                super.onPostExecute((productivityRecords));
-                productivityAdapter.update(productivityRecords);
-            }
-        }.execute();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Bevétel");
         setSupportActionBar(toolbar);
 
+        realm =  Realm.getInstance(getRealmConfig());
+        RealmResults<ProductivityRecord> records= realm.where(ProductivityRecord.class).findAll();
+        productivityAdapter = new ProductivityAdapter(this, records, true, true);
+        recyclerView = (RealmRecyclerView) findViewById(R.id.realm_recycler_view);
+        recyclerView.setAdapter(productivityAdapter);
+
+        Log.d("", "path: " + realm.getPath());
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               new AddNewRecordFragment().show(getSupportFragmentManager(),AddNewRecordFragment.TAG);
             }
         });
-
-        initRecyclerView();
     }
 
     @Override
@@ -79,10 +65,31 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_statistics) {
+            startStatisticsActivity();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startStatisticsActivity() {
+        Intent intent = new Intent(this, StatisticsActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onRecordCreated(ProductivityRecord newRecord) {
+        addRecord(newRecord);
+    }
+
+    private void addRecord(ProductivityRecord newRecord) {
+        realm.beginTransaction();
+        realm.copyToRealm(newRecord);
+        realm.commitTransaction();
     }
 }

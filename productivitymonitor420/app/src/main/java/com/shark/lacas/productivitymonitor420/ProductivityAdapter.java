@@ -1,5 +1,7 @@
 package com.shark.lacas.productivitymonitor420;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,95 +9,70 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+
+import io.realm.Realm;
+import io.realm.RealmBasedRecyclerViewAdapter;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
 /**
  * Created by macbookpro on 26/11/16.
  */
-public class ProductivityAdapter extends RecyclerView.Adapter<ProductivityViewHolder>{
-    public final List<ProductivityRecord> records;
+public class ProductivityAdapter extends RealmBasedRecyclerViewAdapter<ProductivityRecord, ProductivityViewHolder> {
 
-    public ProductivityAdapter() {
-        records = new ArrayList<>();
+    private static final int[] COLORS = new int[] {
+            Color.argb(255, 28, 160, 170),
+            Color.argb(255, 99, 161, 247),
+            Color.argb(255, 13, 79, 139),
+            Color.argb(255, 89, 113, 173),
+            Color.argb(255, 200, 213, 219),
+            Color.argb(255, 200, 213, 219),
+            Color.argb(255, 200, 213, 219)
+
+    };
+
+    public ProductivityAdapter(Context context, RealmResults<ProductivityRecord> realmResults, boolean automaticUpdate, boolean animateResults) {
+        super(context, realmResults, automaticUpdate, animateResults);
     }
 
 
     @Override
-    public ProductivityViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View recordView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_record, parent, false);
+    public ProductivityViewHolder onCreateRealmViewHolder(ViewGroup viewGroup, int i) {
+        View recordView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_record, viewGroup, false);
         ProductivityViewHolder viewHolder = new ProductivityViewHolder(recordView);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ProductivityViewHolder holder, int position) {
-        ProductivityRecord record = records.get(position);
-        holder.timeView.setText(DateFormat.getDateTimeInstance().format(record.time));
-        holder.totalMoneyTextView.setText(String.valueOf(record.totalMoney));
-        holder.minuteTextView.setText(String.valueOf(record.minute));
-        holder.machineID.setText(getMachineImageResource(record.machine));
-        holder.sexeImageView.setImageResource(getSexeImageResource(record.fn));
+    public void onBindRealmViewHolder(ProductivityViewHolder productivityViewHolder, int i) {
+        final ProductivityRecord record = realmResults.get(i);
+
+        productivityViewHolder.timeView.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).format(record.time));
+        productivityViewHolder.totalMoneyTextView.setText(String.valueOf(record.totalMoney));
+        productivityViewHolder.minuteTextView.setText(String.valueOf(record.minute));
+        productivityViewHolder.machineID.setText(String.valueOf(record.machine));
+        productivityViewHolder.sexeImageView.setImageResource(getSexeImageResource(record.fn));
+        productivityViewHolder.itemView.setBackgroundColor(COLORS[record.machine]);
+
     }
 
-    private @DrawableRes int getSexeImageResource(ProductivityRecord.FN fn) {
+    private @DrawableRes int getSexeImageResource(String fn) {
         int ret;
         switch (fn) {
-            case FERFI:
+            case "@+string/man":
                 ret = R.drawable.male_icon;
                 break;
-            case NO:
+            case "@+string/woman":
                 ret = R.drawable.female_icon;
                 break;
             default:
                 ret = 0;
         }
         return ret;
-    }
-
-
-    //DONT BE SURPRISED ITS FOR FURTHER DEVELOPMENT OKAY????!!
-    private int getMachineImageResource(ProductivityRecord.Machine machine) {
-        int ret;
-        switch (machine) {
-            case FIRST:
-                ret = 1;
-                break;
-            case SECOND:
-                ret = 2;
-                break;
-            case THIRD:
-                ret = 3;
-                break;
-            case FOURTH:
-                ret = 3;
-                break;
-            case FIFTH:
-                ret = 3;
-                break;
-            default:
-                ret = 0;
-        }
-        return ret;
-    }
-
-    public void addItem(ProductivityRecord record) {
-        records.add(record);
-        notifyItemInserted(records.size() - 1);
-    }
-
-    public void update(List<ProductivityRecord> productivityRecords) {
-        records.clear();
-        records.addAll(productivityRecords);
-        notifyDataSetChanged();
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return records.size();
     }
 
 }

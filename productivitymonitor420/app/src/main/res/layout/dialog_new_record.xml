@@ -2,34 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="24dp">
 
-    <NumberPicker
-        android:layout_width="114dp"
-        android:layout_height="93dp"
-        android:id="@+id/numberPicker"
-        android:layout_gravity="center_horizontal"
-        android:showDividers="beginning" />
-
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout
         android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
-        <RadioButton android:id="@+id/RADIO_FERFI"
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="68dp"
+            android:id="@+id/MACHINEPICKER"
+            android:showDividers="beginning" />
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/SEXEGROUPPE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/man"
-            android:onClick="onRadioButtonClicked" />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/woman"
-            android:onClick="onRadioButtonClicked"
-            android:id="@+id/RADIO_NO"
-            style="@style/AppTheme" />
-    </RadioGroup>
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+            <RadioButton android:id="@+id/RADIO_FERFI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/man"
+             />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/woman"
+                android:checked="true"
+                android:id="@+id/RADIO_NO"
+                style="@style/AppTheme" />
+        </RadioGroup>
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,12 +47,12 @@
         android:layout_gravity="center_horizontal" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/MINUTETEXTINPUT"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,17 +63,11 @@
         android:layout_gravity="center_horizontal" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/SUMTEXTINPUT"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add"
-        android:id="@+id/ADDBUTTON"
-        android:layout_gravity="center_horizontal" />
 </LinearLayout>
