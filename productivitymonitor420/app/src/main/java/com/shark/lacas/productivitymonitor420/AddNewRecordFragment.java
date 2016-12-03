@@ -55,7 +55,7 @@ public class AddNewRecordFragment extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new AlertDialog.Builder(getContext()).setTitle(R.string.addnewrecord)
-                .setIcon(R.drawable.rectangle).setView(getContentView()).setPositiveButton(R.string.add, new
+                .setIcon(R.drawable.ic_attach_money).setView(getContentView()).setPositiveButton(R.string.add, new
                         DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialogInterface, int i) {

@@ -1,6 +1,8 @@
 package com.shark.lacas.productivitymonitor420;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,11 +13,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.Toast;
 
+
+import java.lang.reflect.Method;
 
 import co.moonmonkeylabs.realmrecyclerview.RealmRecyclerView;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class MainActivity extends RealmBaseActivity implements AddNewRecordFragment.INewRecordDialogListener {
 
@@ -29,16 +36,14 @@ public class MainActivity extends RealmBaseActivity implements AddNewRecordFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Bevétel");
+        toolbar.setTitle(R.string.income);
         setSupportActionBar(toolbar);
 
         realm =  Realm.getInstance(getRealmConfig());
-        RealmResults<ProductivityRecord> records= realm.where(ProductivityRecord.class).findAll();
+        RealmResults<ProductivityRecord> records= realm.where(ProductivityRecord.class).findAll().sort("time", Sort.DESCENDING);
         productivityAdapter = new ProductivityAdapter(this, records, true, true);
         recyclerView = (RealmRecyclerView) findViewById(R.id.realm_recycler_view);
         recyclerView.setAdapter(productivityAdapter);
-
-        Log.d("", "path: " + realm.getPath());
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -67,6 +72,23 @@ public class MainActivity extends RealmBaseActivity implements AddNewRecordFragm
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_statistics) {
             startStatisticsActivity();
+        }
+
+        if (id == R.id.action_deleteall){
+            new AlertDialog.Builder(this)
+                    .setTitle("Title")
+                    .setMessage("Tényleg törölni akarja az összes bevitt adatot?\n(A sorok oldalra húzásával egyesével is törölhet elemeket)")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            realm.beginTransaction();
+                            realm.delete(ProductivityRecord.class);
+                            realm.commitTransaction();
+                            Toast.makeText(MainActivity.this, "Minden adat törölve", Toast.LENGTH_SHORT).show();
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
+
         }
 
         return super.onOptionsItemSelected(item);

@@ -64,8 +64,8 @@ public class ShowReportFragment extends AppCompatDialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new AlertDialog.Builder(getContext()).setTitle("Összesített statisztika")
-                .setIcon(R.drawable.rectangle).setView(getContentView()).setPositiveButton(R.string.ok, null)
+        return new AlertDialog.Builder(getContext()).setTitle(R.string.total_stat)
+                .setIcon(R.drawable.ic_assignment).setView(getContentView()).setPositiveButton(R.string.ok, null)
                 .setNegativeButton(R.string.cancel, null).create();
     }
 
@@ -99,7 +99,7 @@ public class ShowReportFragment extends AppCompatDialogFragment {
         series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
             @Override
             public int get(DataPoint data) {
-                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
+                return ProductivityAdapter.COLORS[(int)data.getX()-1];
             }
         });
 
@@ -110,7 +110,7 @@ public class ShowReportFragment extends AppCompatDialogFragment {
         series.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(getActivity(), (int)dataPoint.getX()+". szoli: "+(int)dataPoint.getY()+" vendég", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), (int)dataPoint.getX()+getString(R.string.sol)+(int)dataPoint.getY()+getString(R.string.customer), Toast.LENGTH_SHORT).show();
             }
         });
 

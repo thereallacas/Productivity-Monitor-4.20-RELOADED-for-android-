@@ -24,15 +24,12 @@ import io.realm.RealmResults;
  */
 public class ProductivityAdapter extends RealmBasedRecyclerViewAdapter<ProductivityRecord, ProductivityViewHolder> {
 
-    private static final int[] COLORS = new int[] {
-            Color.argb(255, 28, 160, 170),
-            Color.argb(255, 99, 161, 247),
-            Color.argb(255, 13, 79, 139),
-            Color.argb(255, 89, 113, 173),
-            Color.argb(255, 200, 213, 219),
-            Color.argb(255, 200, 213, 219),
-            Color.argb(255, 200, 213, 219)
-
+    public static final int[] COLORS = new int[] {
+            Color.argb(255, 255, 51, 88), //gaypink
+            Color.argb(255, 51, 104, 255), //blu
+            Color.argb(255, 255, 252, 51), //yello
+            Color.argb(255, 255, 116, 51), //orangé
+            Color.argb(255, 255, 51, 88), //gaypink
     };
 
     public ProductivityAdapter(Context context, RealmResults<ProductivityRecord> realmResults, boolean automaticUpdate, boolean animateResults) {
@@ -56,7 +53,7 @@ public class ProductivityAdapter extends RealmBasedRecyclerViewAdapter<Productiv
         productivityViewHolder.minuteTextView.setText(String.valueOf(record.minute));
         productivityViewHolder.machineID.setText(String.valueOf(record.machine));
         productivityViewHolder.sexeImageView.setImageResource(getSexeImageResource(record.fn));
-        productivityViewHolder.itemView.setBackgroundColor(COLORS[record.machine]);
+        productivityViewHolder.itemView.setBackgroundColor(COLORS[record.machine-1]);
 
     }
 
